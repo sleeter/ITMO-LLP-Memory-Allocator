@@ -51,6 +51,11 @@ void* heap_init( size_t initial ) {
   return region.addr;
 }
 
+/*  освободить всю память, выделенную под кучу */
+void heap_term( ) {
+  /*  ??? */
+}
+
 #define BLOCK_MIN_CAPACITY 24
 
 /*  --- Разделение блоков (если найденный свободный блок слишком большой )--- */

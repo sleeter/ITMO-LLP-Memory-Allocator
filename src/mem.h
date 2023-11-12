@@ -13,6 +13,7 @@
 void* _malloc( size_t query );
 void  _free( void* mem );
 void* heap_init( size_t initial_size );
+void  heap_term( void );
 
 #define DEBUG_FIRST_BYTES 4
 
