@@ -62,13 +62,13 @@ void print_mmap_call(FILE * output, void * addr, size_t length, int prot, int fl
     } else {
         int amount = 0;
 
-        for (int mask = 1; mask > 0; mask <<= 1) {
+        for (int mask = 1; mask > 0; *(unsigned int *)&mask <<= 1) {
             if ((flags & mask) != 0) {
                 ++amount;
             }
         }
 
-        for (int i = 0, mask = 1; i < amount; ++i, mask <<= 1) {
+        for (int i = 0, mask = 1; i < amount; ++i, *(unsigned int *)&mask <<= 1) {
             if ((flags & mask) == 0) {
                 --i;
                 continue;

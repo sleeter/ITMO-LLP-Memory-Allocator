@@ -39,7 +39,7 @@ DEFINE_TEST(term) {
 
     current_mmap_impl = MMAP_IMPL(success);
     assert(heap_init(0));
-    assert(_malloc(REGION_MIN_SIZE - 2 * offsetof(struct block_header, contents) - BLOCK_MIN_CAPACITY));
+    assert(_malloc(REGION_MIN_SIZE - 2 * offsetof(struct block_header, contents) - BLOCK_MIN_CAPACITY - 7));
     current_mmap_impl = MMAP_IMPL(fail_fixed);
     assert(_malloc(REGION_MIN_SIZE - offsetof(struct block_header, contents)));
     heap_term();
