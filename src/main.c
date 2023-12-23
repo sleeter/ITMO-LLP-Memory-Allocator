@@ -1,6 +1,6 @@
-#include <assert.h>
 #include "mem_internals.h"
 #include "mem.h"
+#include <assert.h>
 
 void test_successful_allocation() {
     void* test_heap = heap_init(0);
