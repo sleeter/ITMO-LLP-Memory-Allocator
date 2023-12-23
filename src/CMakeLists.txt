@@ -10,10 +10,10 @@ if(CLANG_TIDY)
     file(STRINGS ${PROJECT_SOURCE_DIR}/clang-tidy-checks.txt clang_tidy_checks)
     list(JOIN clang_tidy_checks "," clang_tidy_checks_str)
     set(CMAKE_C_CLANG_TIDY
-        ${CLANG_TIDY}
-        -header-filter=${CMAKE_SOURCE_DIR}
-        -checks=${clang_tidy_checks_str}
-        -warnings-as-errors=*
+            ${CLANG_TIDY}
+            -header-filter=${CMAKE_SOURCE_DIR}
+            -checks=${clang_tidy_checks_str}
+            -warnings-as-errors=*
     )
 endif()
 
@@ -23,8 +23,6 @@ list(FILTER sources EXCLUDE REGEX main.c)
 add_library(memalloc STATIC ${sources})
 target_include_directories(memalloc PUBLIC .)
 
-if(EXISTS main.c)
-    add_executable(memalloc_exe main.c)
-    target_link_libraries(memalloc_exe PRIVATE memalloc)
-    set_target_properties(memalloc_exe PROPERTIES OUTPUT_NAME memalloc)
-endif()
+add_executable(memalloc_exe main.c)
+target_link_libraries(memalloc_exe PRIVATE memalloc)
+set_target_properties(memalloc_exe PROPERTIES OUTPUT_NAME memalloc)
