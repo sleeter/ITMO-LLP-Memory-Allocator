@@ -15,6 +15,8 @@ void  _free( void* mem );
 void* heap_init( size_t initial_size );
 void  heap_term( void );
 
+struct block_header* block_get_header( void* contents );
+
 #define DEBUG_FIRST_BYTES 4
 
 void debug_struct_info( FILE* f, void const* address );

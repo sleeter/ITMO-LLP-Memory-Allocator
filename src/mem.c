@@ -199,7 +199,7 @@ void* _malloc( size_t query ) {
   else return NULL;
 }
 
-static struct block_header* block_get_header(void* contents) {
+struct block_header* block_get_header(void* contents) {
   return (struct block_header*) (((uint8_t*)contents)-offsetof(struct block_header, contents));
 }
 
