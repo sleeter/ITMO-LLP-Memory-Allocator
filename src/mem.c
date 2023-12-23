@@ -182,7 +182,7 @@ static struct block_header* grow_heap( struct block_header* restrict last, size_
 /*  Реализует основную логику malloc и возвращает заголовок выделенного блока */
 static struct block_header* memalloc( size_t query, struct block_header* heap_start) {
     if(!heap_start) return NULL;
-    query = size_max(query, BLOCK_MIN_CAPACITY)
+    query = size_max(query, BLOCK_MIN_CAPACITY);
     struct block_search_result bsr = try_memalloc_existing(query, heap_start);
     while(bsr.type != BSR_FOUND_GOOD_BLOCK) {
         if(bsr.type == BSR_CORRUPTED) heap_start = grow_heap(heap_start, size_from_capacity((block_capacity){query}).bytes);
