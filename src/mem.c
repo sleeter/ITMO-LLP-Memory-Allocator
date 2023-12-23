@@ -189,7 +189,7 @@ static struct block_header* memalloc( size_t query, struct block_header* heap_st
         else heap_start = grow_heap(bsr.block, size_from_capacity((block_capacity){query}).bytes);
         bsr = try_memalloc_existing(query, heap_start);
     }
-    return bsr;
+    return bsr.block;
 
 }
 
