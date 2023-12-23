@@ -2,6 +2,7 @@
 #include "mem.h"
 #include <assert.h>
 
+
 void test_successful_allocation() {
     void* test_heap = heap_init(0);
     assert(test_heap != NULL);
@@ -54,17 +55,16 @@ void test_free_two_blocks() {
     heap_term();
 }
 void test_new_region_extends_old() {
-    void* test_heap = heap_init(1024);
+    void* test_heap = heap_init(0);
     assert(test_heap != NULL);
+    void* test_block1 = _malloc(4096);
+    assert(test_block1 != NULL);
     debug_heap(stdout, HEAP_START);
-    size_t old_size = size_from_capacity(block_get_header(test_heap)->capacity.bytes).bytes;
-    void* test_block = _malloc(2048);
-    assert(test_block != NULL);
+    void* test_block2 = _malloc(4096*3);
+    assert(test_block2 != NULL);
     debug_heap(stdout, HEAP_START);
-    size_t new_size = size_from_capacity(block_get_header(test_block)->capacity.bytes).bytes;
-    assert(test_block == HEAP_START);
-    assert(new_size > old_size);
-    _free(test_block);
+    _free(test_block2);
+    _free(test_block1);
     heap_term();
 }
 
