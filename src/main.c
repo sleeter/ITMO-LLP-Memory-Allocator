@@ -1,11 +1,11 @@
 #include <assert.h>
-#include "mem.h"
 #include "mem_internals.h"
+#include "mem.h"
 
 void test_successful_allocation() {
     void* test_heap = heap_init(0);
     assert(test_heap != NULL);
-    debug_heap(stdout, HEAP_START)ж
+    debug_heap(stdout, HEAP_START);
     void* test_block = _malloc(1024);
     assert(test_block != NULL);
     debug_heap(stdout, HEAP_START);
