@@ -5,14 +5,14 @@
 void test_successful_allocation() {
     void* test_heap = heap_init(0);
     assert(test_heap != NULL);
-    debug_heap(stdout, HEAP_START)
+    debug_heap(stdout, HEAP_START)ж
     void* test_block = _malloc(1024);
     assert(test_block != NULL);
     debug_heap(stdout, HEAP_START);
     _free(test_block);
-    heap_term()
+    heap_term();
 }
-void test_free_one_block()() {
+void test_free_one_block() {
     void* test_heap = heap_init(0);
     assert(test_heap != NULL);
     void* test_block1 = _malloc(1024);
@@ -57,11 +57,11 @@ void test_new_region_extends_old() {
     void* test_heap = heap_init(1024);
     assert(test_heap != NULL);
     debug_heap(stdout, HEAP_START);
-    size_t old_size = size_from_capacity(block_get_header(test_heap)->capacity);
+    size_t old_size = size_from_capacity(block_get_header(test_heap)->capacity).bytes;
     void* test_block = _malloc(2048);
     assert(test_block != NULL);
     debug_heap(stdout, HEAP_START);
-    size_t new_size = size_from_capacity(block_get_header(test_block)->capacity);
+    size_t new_size = size_from_capacity(block_get_header(test_block)->capacity).bytes;
     assert(test_block == HEAP_START);
     assert(new_size > old_size);
     _free(test_block);
