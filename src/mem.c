@@ -187,7 +187,7 @@ static struct block_header* memalloc( size_t query, struct block_header* heap_st
     while(bsr.type != BSR_FOUND_GOOD_BLOCK) {
         if(bsr.type == BSR_CORRUPTED) heap_start = grow_heap(heap_start, size_from_capacity((block_capacity){query}).bytes);
         else heap_start = grow_heap(bsr.block, size_from_capacity((block_capacity){query}).bytes);
-        bsr = try_memalloc_existing(query, heap_start)
+        bsr = try_memalloc_existing(query, heap_start);
     }
     return bsr;
 
