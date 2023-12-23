@@ -153,7 +153,6 @@ static struct block_search_result find_good_or_last  ( struct block_header* rest
             block = block->next;
         }
     }
-    if(!last) return (struct block_search_result) {.type = BSR_CORRUPTED, .block = NULL};
     return (struct block_search_result) {.type = BSR_REACHED_END_NOT_FOUND, .block = last};
 }
 
@@ -169,15 +168,15 @@ static struct block_search_result try_memalloc_existing ( size_t query, struct b
 }
 
 
-
 static struct block_header* grow_heap( struct block_header* restrict last, size_t query ) {
     if(!last) return NULL;
     struct region reg = alloc_region(block_after(last), size_max(query, BLOCK_MIN_CAPACITY));
     if(region_is_invalid(&reg)) return NULL;
     last->next = reg.addr;
-    if(!last->is_free || !try_merge_with_next(last)) return last;
+    if (last->is_free && try_merge_with_next(last)) return last;
     return last->next;
 }
+
 
 /*  Реализует основную логику malloc и возвращает заголовок выделенного блока */
 static struct block_header* memalloc( size_t query, struct block_header* heap_start) {
@@ -185,12 +184,11 @@ static struct block_header* memalloc( size_t query, struct block_header* heap_st
     query = size_max(query, BLOCK_MIN_CAPACITY);
     struct block_search_result bsr = try_memalloc_existing(query, heap_start);
     while(bsr.type != BSR_FOUND_GOOD_BLOCK) {
-        if(bsr.type == BSR_CORRUPTED) heap_start = grow_heap(heap_start, size_from_capacity((block_capacity){query}).bytes);
+        if(bsr.type == BSR_CORRUPTED) return NULL;
         else heap_start = grow_heap(bsr.block, size_from_capacity((block_capacity){query}).bytes);
         bsr = try_memalloc_existing(query, heap_start);
     }
     return bsr.block;
-
 }
 
 void* _malloc( size_t query ) {
