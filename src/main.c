@@ -2,10 +2,13 @@
 #include "mem.h"
 #include <assert.h>
 
+void heap_init_and_check(size_t initial_size) {
+    void* test_heap = heap_init(initial_size);
+    assert(test_heap != NULL);
+}
 
 void test_successful_allocation() {
-    void* test_heap = heap_init(0);
-    assert(test_heap != NULL);
+    heap_init_and_check(0);
     debug_heap(stdout, HEAP_START);
     void* test_block = _malloc(1024);
     assert(test_block != NULL);
@@ -14,8 +17,7 @@ void test_successful_allocation() {
     heap_term();
 }
 void test_free_one_block() {
-    void* test_heap = heap_init(0);
-    assert(test_heap != NULL);
+    heap_init_and_check(0);
     void* test_block1 = _malloc(1024);
     assert(test_block1 != NULL);
     void* test_block2 = _malloc(1024);
@@ -31,8 +33,7 @@ void test_free_one_block() {
     heap_term();
 }
 void test_free_two_blocks() {
-    void* test_heap = heap_init(0);
-    assert(test_heap != NULL);
+    heap_init_and_check(0);
     void* test_block1 = _malloc(1024);
     assert(test_block1 != NULL);
     void* test_block2 = _malloc(1024);
@@ -55,8 +56,7 @@ void test_free_two_blocks() {
     heap_term();
 }
 void test_new_region_extends_old() {
-    void* test_heap = heap_init(0);
-    assert(test_heap != NULL);
+    heap_init_and_check(0);
     void* test_block1 = _malloc(4096);
     assert(test_block1 != NULL);
     debug_heap(stdout, HEAP_START);
